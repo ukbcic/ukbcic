@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Institution Map — UK BCI Consortium</title>
+  <meta name="description"
+    content="Interactive map of UK universities and research institutions active in brain-computer interface research." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .map-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-header {
+      background: var(--clr-navy);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .map-header-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--clr-cyan);
+      margin-bottom: 0.6rem;
+    }
+
+    .map-header-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      margin-top: 0.5rem;
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+
+    .map-header-sub {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.65);
+      max-width: 580px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .map-legend {
+      display: flex;
+      justify-content: center;
+      gap: 1.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.75);
+      font-weight: 500;
+    }
+
+    .map-legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-green { background: #22C55E; }
+    .dot-blue  { background: #3B82F6; }
+    .dot-red   { background: #EF4444; }
+
+    .map-frame-wrap {
+      flex: 1;
+      position: relative;
+      min-height: calc(100vh - 340px);
+    }
+
+    .map-frame-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Ensure body stretches to fill viewport for iframe to size correctly */
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main.page-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="navbar-logo">
+      <img src="assets/logo.png" alt="UK BCI Consortium logo" />
+      <span>UK BCI Consortium</span>
+    </a>
+    <ul class="navbar-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="map.html">Institution Map</a></li>
+    </ul>
+    <button class="navbar-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="navbar-mobile" role="navigation" aria-label="Mobile navigation">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="map.html">Institution Map</a></li>
+    </ul>
+  </div>
+
+  <main class="page-content">
+
+    <section class="map-section" aria-label="Institution map">
+
+      <!-- Header -->
+      <div class="map-header">
+        <p class="map-header-label">Network</p>
+        <h1 class="map-header-title">UK BCI Institution Map</h1>
+        <p class="map-header-sub">
+          Explore universities and research institutions across the UK with active
+          brain-computer interface research programmes. Click any marker for details
+          on research groups and key investigators.
+        </p>
+        <div class="map-legend">
+          <span class="map-legend-item">
+            <span class="map-legend-dot dot-green"></span> Core consortium institutions
+          </span>
+          <span class="map-legend-item">
+            <span class="map-legend-dot dot-blue"></span> Active BCI research partners
+          </span>
+          <span class="map-legend-item">
+            <span class="map-legend-dot dot-red"></span> Associated institutions
+          </span>
+        </div>
+      </div>
+
+      <!-- Map iframe -->
+      <div class="map-frame-wrap">
+        <iframe
+          src="institution_map.html"
+          title="Interactive map of UK BCI research institutions"
+          loading="lazy">
+        </iframe>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+    <!-- FOOTER -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="assets/logo.png" alt="UK BCI Consortium" />
+                    <p>Uniting UK researchers, clinicians and engineers to translate brain-computer interface science
+                        into clinical reality.</p>
+                </div>
+                <div>
+                    <p class="footer-col-title">Navigate</p>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="map.html">Institution Map</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-col-title">Connect</p>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="https://www.linkedin.com/company/uk-bci-consortium" target="_blank" rel="noopener">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 UK BCI Consortium. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neural Decoding Breakthrough — UK BCI Consortium</title>
+    <meta name="description"
+        content="Researchers at the UCL BCI Lab have achieved 94% accuracy in predicting intended speech directly from cortical signals, a landmark result for non-invasive BCI." />
+    <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <a href="../index.html" class="navbar-logo">
+            <img src="../assets/logo.png" alt="UK BCI Consortium logo" />
+            <span>UK BCI Consortium</span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../news.html">News</a></li>
+            <li><a href="../events.html">Events</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+            <li><a href="../map.html">Institution Map</a></li>
+        </ul>
+        <button class="navbar-hamburger" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+    <div class="navbar-mobile">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../news.html">News</a></li>
+            <li><a href="../events.html">Events</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+            <li><a href="../map.html">Institution Map</a></li>
+        </ul>
+    </div>
+
+    <main class="page-content">
+
+        <!-- ═══════════════════════════════════════
+         TOP MEDIA BLOCK
+    ════════════════════════════════════════ -->
+        <div class="article-hero-media-container">
+            <!--
+        Replace the <img> below with a <video> tag to use a video, e.g.:
+        <video class="article-hero-media" autoplay muted loop playsinline>
+          <source src="assets/your-video.mp4" type="video/mp4" />
+        </video>
+
+        Or use an animated GIF:
+        <img class="article-hero-media" src="assets/your-animation.gif" alt="Description" />
+      -->
+            <img class="article-hero-media" src="../assets/hero.png"
+                alt="False-colour rendering of cortical electrode array capturing speech-related neural activity" />
+            <div class="article-hero-caption">
+                False-colour rendering of cortical activity during imagined speech. Credit: UCL BCI Lab, 2026.
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+         ARTICLE LAYOUT
+    ════════════════════════════════════════ -->
+        <div class="article-layout">
+
+            <!-- Back link -->
+            <a href="../news.html" class="article-back">&#8592; Back to News</a>
+
+            <!-- Category tag -->
+            <span class="article-category-tag tag-news">Research News</span>
+
+            <!-- Headline -->
+            <h1 class="article-headline">
+                Neural Decoding Breakthrough Achieves 94% Accuracy in Speech Prediction from Cortical Signals
+            </h1>
+
+            <!-- Author bar -->
+            <div class="article-author-bar">
+                <div class="author-avatar">DR</div>
+                <div>
+                    <div class="author-info-name">Dr Rebecca Thornton</div>
+                    <div class="author-info-meta">
+                        <span>UCL BCI Lab</span>
+                        <span>14 February 2026</span>
+                        <span>5 min read</span>
+                    </div>
+                </div>
+                <div class="article-share" aria-label="Share this article">
+                    <button class="share-btn" title="Share on Twitter/X" aria-label="Share on Twitter">𝕏</button>
+                    <button class="share-btn" title="Share on LinkedIn" aria-label="Share on LinkedIn">in</button>
+                    <button class="share-btn" title="Copy link" aria-label="Copy link">🔗</button>
+                </div>
+            </div>
+
+            <!-- ── ARTICLE BODY ──────────────────── -->
+            <article class="article-body">
+
+                <p>
+                    Researchers at the UCL Brain-Computer Interface Lab, in collaboration with the University of Oxford
+                    and the Alan Turing Institute, have demonstrated a neural speech decoding system that achieves
+                    <strong>94.3% accuracy</strong> on a 500-word vocabulary — surpassing the previous state of the art
+                    by more than 11 percentage points while operating in real time on a standard clinical-grade EEG
+                    headset.
+                </p>
+
+                <div class="article-callout">
+                    <div class="article-callout-label">Key Finding</div>
+                    <p>94.3% phoneme classification accuracy from a 64-channel EEG cap, enabling a decoded typing speed
+                        of approximately 62 words per minute in healthy volunteers.</p>
+                </div>
+
+                <h2>Background: The Challenge of Brain-to-Speech</h2>
+
+                <p>
+                    For individuals living with amyotrophic lateral sclerosis (ALS), locked-in syndrome, or severe
+                    dysarthria, the ability to communicate is profoundly compromised. Conventional augmentative and
+                    alternative communication (AAC) devices rely on residual motor control — eye tracking, switch
+                    scanning — which becomes inadequate as disease progresses.
+                </p>
+
+                <p>
+                    Brain-computer interfaces that decode intended speech directly from neural signals offer a pathway
+                    to restore natural communication without requiring any motor output. However, the performance of
+                    non-invasive EEG-based speech BCIs had historically lagged behind invasive cortical implants by a
+                    wide margin, limiting their clinical translation.
+                </p>
+
+                <!-- Inline image with caption -->
+                <img class="article-inline-img" src="../assets/hero.png"
+                    alt="Diagram showing the signal processing pipeline from EEG electrode array to decoded text output" />
+                <p class="article-img-caption">
+                    Figure 1 — The signal processing pipeline from 64-channel EEG capture through transformer-based
+                    decoding to text output. <em>Credit: Thornton et al., Nature Neuroscience, 2026.</em>
+                </p>
+
+                <h2>Methodology</h2>
+
+                <h3>Dataset and Participants</h3>
+
+                <p>
+                    Thirty-two healthy volunteers participated in up to 10 recording sessions each, producing a
+                    cumulative 480 hours of imagined speech EEG data. Participants silently attempted to articulate
+                    words from a pre-specified vocabulary while their scalp EEG was recorded at 2048 Hz using a clinical
+                    EEG cap.
+                </p>
+
+                <p>
+                    Crucially, the study also enrolled six participants with ALS at varying disease stages, representing
+                    the first prospective ALS cohort in a non-invasive speech BCI study of this scale within the UK.
+                </p>
+
+                <h3>The Temporal Transformer Architecture</h3>
+
+                <p>
+                    The decoding model, dubbed <em>CortexLM</em>, is a causal transformer architecture adapted from
+                    large language model design principles. It ingests 500 ms windows of pre-processed EEG and outputs a
+                    probability distribution over phonemes, which a beam-search decoder then converts to word hypotheses
+                    constrained by a language model prior.
+                </p>
+
+                <blockquote>
+                    <p>"We essentially gave the network the same architectural primitives that power modern LLMs, but
+                        trained it on the temporal structure of cortical oscillations rather than text tokens. The gains
+                        speak for themselves."</p>
+                    <cite>— Dr Rebecca Thornton, lead author, UCL BCI Lab</cite>
+                </blockquote>
+
+                <h2>Results</h2>
+
+                <p>
+                    Across the 32 healthy participants, CortexLM achieved a mean phoneme accuracy of <strong>94.3% ±
+                        2.1%</strong> and a word error rate (WER) of <strong>6.8%</strong> on the held-out test
+                    vocabulary. Decoded typing speed averaged 62 words per minute (WPM), with the fastest participant
+                    reaching 81 WPM — competitive with eye-tracking interfaces in optimal conditions.
+                </p>
+
+                <!-- Second inline image -->
+                <img class="article-inline-img" src="../assets/hero.png"
+                    alt="Bar chart comparing decoding accuracy across BCI systems from 2018 to 2026" />
+                <p class="article-img-caption">
+                    Figure 2 — Comparison of word error rate across published non-invasive BCI speech decoders
+                    (2018–2026). CortexLM represents the 2026 result. <em>Credit: Thornton et al., 2026.</em>
+                </p>
+
+                <p>
+                    In the ALS cohort, performance was naturally lower (mean WER 18.4%) but remained practically useful
+                    for functional communication, with participants self-reporting high satisfaction scores on the
+                    Communication Effectiveness Index.
+                </p>
+
+                <h2>Implications and Next Steps</h2>
+
+                <p>
+                    The team plans to commence a multi-site clinical feasibility trial across three NHS hospitals in Q3
+                    2026, supported by an MRC Developmental Pathway Funding Scheme award. Regulatory engagement with the
+                    MHRA has already begun.
+                </p>
+
+                <ul>
+                    <li>Expansion to a 1,000-word vocabulary target by end of 2026</li>
+                    <li>Integration with off-the-shelf EEG hardware to reduce system cost below £3,000</li>
+                    <li>Open-sourcing the CortexLM weights and pre-processing pipeline on GitHub</li>
+                    <li>Longitudinal follow-up of ALS participants over 18 months</li>
+                </ul>
+
+                <p>
+                    The full paper, <em>"High-accuracy imagined speech decoding from scalp EEG via causal transformer
+                        networks"</em>, is published in <em>Nature Neuroscience</em> (DOI: 10.1038/s41593-026-00000-0)
+                    and is available open-access.
+                </p>
+
+            </article>
+
+        </div><!-- /.article-layout -->
+    </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../assets/logo.png" alt="UK BCI Consortium" />
+          <p>Uniting UK researchers, clinicians and engineers to translate brain-computer interface science
+            into clinical reality.</p>
+        </div>
+        <div>
+          <p class="footer-col-title">Navigate</p>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../news.html">News</a></li>
+            <li><a href="../events.html">Events</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+            <li><a href="../map.html">Institution Map</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Connect</p>
+          <ul class="footer-links">
+            <li><a href="../contact.html">Contact Us</a></li>
+            <li><a href="https://www.linkedin.com/company/uk-bci-consortium" target="_blank" rel="noopener">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 UK BCI Consortium. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    <script src="../script.js"></script>
+</body>
+
+</html>

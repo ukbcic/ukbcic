@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Article Builder — UK BCI Consortium (Admin)</title>
+    <!-- Not linked from the public site — access directly via URL -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ── Reset & base ─────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --clr-primary: #1E1ECC;
+            --clr-blue: #2979FF;
+            --clr-cyan: #5BC8FF;
+            --clr-navy: #0D0F3C;
+            --clr-bg: #F0F2F8;
+            --clr-surface: #FFFFFF;
+            --clr-border: #D8DEF2;
+            --clr-text: #1A1A3E;
+            --clr-muted: #5A5A8A;
+            --clr-danger: #E53935;
+            --clr-success: #2E7D32;
+            --radius: 10px;
+            --radius-sm: 6px;
+            --shadow: 0 2px 12px rgba(13, 15, 60, 0.1);
+            --shadow-lg: 0 8px 32px rgba(13, 15, 60, 0.15);
+            --grad-brand: linear-gradient(135deg, #1E1ECC, #2979FF, #5BC8FF);
+            --ease: cubic-bezier(.4, 0, .2, 1);
+            --font: 'Inter', system-ui, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--clr-bg);
+            color: var(--clr-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        img,
+        video {
+            max-width: 100%;
+            display: block;
+        }
+
+        textarea,
+        input,
+        select,
+        button {
+            font-family: var(--font);
+        }
+
+        /* ── Top bar ──────────────────────────────────────── */
+        .topbar {
+            background: var(--clr-navy);
+            padding: 0 1.5rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .topbar-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            background: rgba(91, 200, 255, .2);
+            border: 1px solid rgba(91, 200, 255, .35);
+            color: var(--clr-cyan);
+            padding: .2rem .6rem;
+            border-radius: 999px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: .6rem;
+        }
+
+        /* ── Buttons ──────────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .55rem 1.1rem;
+            border-radius: var(--radius-sm);
+            font-size: .85rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform .15s var(--ease), box-shadow .15s var(--ease), background .15s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--grad-brand);
+            color: #fff;
+            box-shadow: 0 3px 12px rgba(30, 30, 204, .35);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(41, 121, 255, .45);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: rgba(255, 255, 255, .8);
+            border: 1.5px solid rgba(255, 255, 255, .3);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--clr-cyan);
+            color: var(--clr-cyan);
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, .07);
+            color: rgba(255, 255, 255, .7);
+            border: 1px solid rgba(255, 255, 255, .12);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, .13);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: #FDECEA;
+            color: var(--clr-danger);
+            border: 1px solid #F9CECE;
+        }
+
+        .btn-danger:hover {
+            background: #F9CECE;
+        }
+
+        .btn-muted {
+            background: #EEF0FA;
+            color: var(--clr-muted);
+            border: 1px solid var(--clr-border);
+        }
+
+        .btn-muted:hover {
+            background: #E0E4F5;
+            color: var(--clr-text);
+        }
+
+        .btn-sm {
+            padding: .35rem .75rem;
+            font-size: .78rem;
+        }
+
+        .btn-icon {
+            padding: .35rem;
+            width: 32px;
+            height: 32px;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+        }
+
+        /* ── Layout ───────────────────────────────────────── */
+        .workspace {
+            display: grid;
+            grid-template-columns: 480px 1fr;
+            flex: 1;
+            overflow: hidden;
+            height: calc(100vh - 56px);
+        }
+
+        .builder-panel {
+            overflow-y: auto;
+            background: var(--clr-bg);
+            border-right: 1px solid var(--clr-border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-panel {
+            overflow-y: auto;
+            background: #E8EBF3;
+            position: relative;
+        }
+
+        /* ── Builder panel components ─────────────────────── */
+        .builder-section {
+            background: var(--clr-surface);
+            border-bottom: 1px solid var(--clr-border);
+            padding: 1.25rem 1.25rem;
+        }
+
+        .builder-section-title {
+            font-size: .75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--clr-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .builder-section-title svg {
+            opacity: .7;
+        }
+
+        /* form fields */
+        label {
+            display: block;
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--clr-muted);
+            margin-bottom: .35rem;
+        }
+
+        input[type=text],
+        input[type=date],
+        input[type=number],
+        select,
+        textarea {
+            width: 100%;
+            padding: .6rem .875rem;
+            border: 1.5px solid var(--clr-border);
+            border-radius: var(--radius-sm);
+            background: var(--clr-bg);
+            color: var(--clr-text);
+            font-size: .88rem;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+            line-height: 1.5;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--clr-blue);
+            box-shadow: 0 0 0 3px rgba(41, 121, 255, .1);
+            background: #fff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .75rem;
+        }
+
+        .form-group {
+            margin-bottom: .875rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        /* file upload zone */
+        .upload-zone {
+            border: 2px dashed var(--clr-border);
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color .2s, background .2s;
+            background: var(--clr-bg);
+            position: relative;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--clr-blue);
+            background: #EBF0FF;
+        }
+
+        .upload-zone input[type=file] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .upload-zone-label {
+            font-size: .82rem;
+            color: var(--clr-muted);
+            margin-top: .3rem;
+        }
+
+        .upload-zone-icon {
+            font-size: 1.75rem;
+            line-height: 1;
+        }
+
+        .upload-preview {
+            margin-top: .75rem;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            max-height: 140px;
+            display: none;
+            background: var(--clr-navy);
+        }
+
+        .upload-preview img {
+            width: 100%;
+            max-height: 140px;
+            object-fit: cover;
+        }
+
+        /* or‑divider */
+        .or-divider {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            margin: .75rem 0;
+            font-size: .75rem;
+            color: var(--clr-muted);
+        }
+
+        .or-divider::before,
+        .or-divider::after {
+            content: '';
+            flex: 1;
+            border-top: 1px solid var(--clr-border);
+        }
+
+        /* ── Block list ───────────────────────────────────── */
+        .blocks-area {
+            padding: 1rem 1.25rem;
+            height: calc((100vh - 56px) / 2);
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+
+        .blocks-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .blocks-title {
+            font-size: .75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--clr-primary);
+        }
+
+        .add-block-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            margin-bottom: 1rem;
+        }
+
+        .add-block-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            padding: .35rem .8rem;
+            border-radius: 999px;
+            font-size: .75rem;
+            font-weight: 600;
+            border: 1.5px solid var(--clr-border);
+            background: #fff;
+            color: var(--clr-text);
+            cursor: pointer;
+            transition: border-color .15s, background .15s, color .15s;
+        }
+
+        .add-block-btn:hover {
+            border-color: var(--clr-blue);
+            color: var(--clr-blue);
+            background: #EBF0FF;
+        }
+
+        .block-item {
+            background: #fff;
+            border: 1.5px solid var(--clr-border);
+            border-radius: var(--radius);
+            margin-bottom: .75rem;
+            overflow: hidden;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .block-item:hover {
+            border-color: #B0B8E8;
+            box-shadow: var(--shadow);
+        }
+
+        .block-item.dragging {
+            opacity: .5;
+        }
+
+        .block-header {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .65rem .875rem;
+            background: #F5F7FC;
+            border-bottom: 1px solid var(--clr-border);
+            cursor: grab;
+        }
+
+        .block-header:active {
+            cursor: grabbing;
+        }
+
+        .block-type-badge {
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: .2rem .55rem;
+            border-radius: 999px;
+        }
+
+        .block-controls {
+            margin-left: auto;
+            display: flex;
+            gap: .35rem;
+        }
+
+        .block-body {
+            padding: .875rem;
+        }
+
+        .block-body .form-group {
+            margin-bottom: .65rem;
+        }
+
+        .block-body .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .block-body textarea {
+            min-height: 72px;
+        }
+
+        /* type colours */
+        .badge-paragraph {
+            background: #E8EEFF;
+            color: #2222AA;
+        }
+
+        .badge-h2 {
+            background: #E8F7FF;
+            color: #005588;
+        }
+
+        .badge-h3 {
+            background: #EEFFF5;
+            color: #006633;
+        }
+
+        .badge-image {
+            background: #FFF5E8;
+            color: #AA5500;
+        }
+
+        .badge-blockquote {
+            background: #F5E8FF;
+            color: #7700AA;
+        }
+
+        .badge-callout {
+            background: #E8FFF5;
+            color: #005533;
+        }
+
+        /* drag handle */
+        .drag-handle {
+            color: var(--clr-muted);
+            cursor: grab;
+            font-size: .9rem;
+            line-height: 1;
+            padding: 2px;
+        }
+
+        /* empty state */
+        .blocks-empty {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--clr-muted);
+            border: 2px dashed var(--clr-border);
+            border-radius: var(--radius);
+        }
+
+        .blocks-empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: .5rem;
+        }
+
+        .blocks-empty p {
+            font-size: .875rem;
+        }
+
+        /* ── Preview panel ────────────────────────────────── */
+        .preview-header {
+            background: var(--clr-surface);
+            border-bottom: 1px solid var(--clr-border);
+            padding: .75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .preview-label {
+            font-size: .75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--clr-muted);
+        }
+
+        .preview-frame-wrap {
+            padding: 1.25rem;
+        }
+
+        .preview-frame {
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        /* ── Preview article styles (scoped inline mimics article.html) */
+        .pv {
+            font-family: var(--font);
+            color: #1A1A3E;
+        }
+
+        .pv-hero-media {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            display: block;
+            background: #0D0F3C;
+        }
+
+        .pv-hero-media video,
+        .pv-hero-media img {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+        }
+
+        .pv-hero-caption {
+            font-size: .72rem;
+            color: #5A5A8A;
+            font-style: italic;
+            padding: .4rem .875rem;
+            background: #F5F7FC;
+            border-bottom: 1px solid #DDE3F4;
+        }
+
+        .pv-layout {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .pv-back {
+            font-size: .8rem;
+            color: #2979FF;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .pv-tag {
+            display: inline-block;
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .25rem .7rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+
+        .pv-headline {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: #0D0F3C;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+        }
+
+        .pv-author-bar {
+            display: flex;
+            align-items: center;
+            gap: .875rem;
+            padding: 1rem 0;
+            border-top: 1px solid #DDE3F4;
+            border-bottom: 1px solid #DDE3F4;
+            margin-bottom: 2rem;
+        }
+
+        .pv-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1E1ECC, #2979FF, #5BC8FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #fff;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .pv-author-name {
+            font-size: .875rem;
+            font-weight: 700;
+            color: #0D0F3C;
+        }
+
+        .pv-author-meta {
+            font-size: .75rem;
+            color: #5A5A8A;
+            display: flex;
+            gap: .875rem;
+            flex-wrap: wrap;
+            margin-top: .1rem;
+        }
+
+        .pv-body h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #0D0F3C;
+            margin: 2rem 0 .75rem;
+            padding-bottom: .4rem;
+            border-bottom: 2px solid #DDE3F4;
+        }
+
+        .pv-body h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1E1ECC;
+            margin: 1.5rem 0 .6rem;
+        }
+
+        .pv-body p {
+            font-size: .975rem;
+            line-height: 1.8;
+            color: #1A1A3E;
+            margin-bottom: 1.25rem;
+        }
+
+        .pv-body blockquote {
+            border-left: 4px solid #2979FF;
+            background: linear-gradient(90deg, rgba(41, 121, 255, .06), transparent);
+            margin: 1.5rem 0;
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .pv-body blockquote p {
+            font-style: italic;
+            color: #1E1ECC;
+            margin-bottom: 0;
+        }
+
+        .pv-body blockquote cite {
+            display: block;
+            font-size: .8rem;
+            color: #5A5A8A;
+            margin-top: .4rem;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        .pv-callout {
+            background: linear-gradient(135deg, rgba(30, 30, 204, .06), rgba(91, 200, 255, .06));
+            border: 1px solid rgba(41, 121, 255, .2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .pv-callout-label {
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: #2979FF;
+            margin-bottom: .4rem;
+        }
+
+        .pv-callout p {
+            font-size: .9rem;
+            color: #1E1ECC;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .pv-img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 1.5rem 0 .4rem;
+            box-shadow: 0 4px 16px rgba(13, 15, 60, .12);
+        }
+
+        .pv-img-caption {
+            font-size: .8rem;
+            color: #5A5A8A;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .pv-placeholder {
+            text-align: center;
+            padding: 4rem 1.5rem;
+            color: #5A5A8A;
+        }
+
+        .pv-placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: .75rem;
+        }
+
+        .pv-placeholder p {
+            font-size: .9rem;
+        }
+
+        /* ── Toast ────────────────────────────────────────── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 9999;
+            background: var(--clr-navy);
+            color: #fff;
+            padding: .75rem 1.25rem;
+            border-radius: var(--radius);
+            font-size: .875rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(80px);
+            opacity: 0;
+            transition: transform .3s var(--ease), opacity .3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--clr-success);
+        }
+
+        .toast.error {
+            background: var(--clr-danger);
+        }
+
+        /* ── Scrollbar ────────────────────────────────────── */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #C5CBE0;
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A0AAC8;
+        }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .workspace {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .preview-panel {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── Top bar ──────────────────────────────────── -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5BC8FF" stroke-width="2.5">
+                <path d="M12 2a9 9 0 0 0-9 9c0 3.1 1.6 5.8 4 7.4V21h10v-2.6c2.4-1.6 4-4.3 4-7.4a9 9 0 0 0-9-9z" />
+                <line x1="9" y1="21" x2="15" y2="21" />
+            </svg>
+            UK BCI Consortium
+            <span class="topbar-badge">Article Builder</span>
+        </div>
+        <div class="topbar-actions">
+            <input type="file" id="load-article-input" accept=".html" style="display:none"
+                onchange="if(this.files[0]) loadArticle(this.files[0])" />
+            <button class="btn btn-outline btn-sm" onclick="document.getElementById('load-article-input').click()" id="load-btn">📂 Load Article</button>
+            <button class="btn btn-ghost btn-sm" onclick="clearAll()" id="clear-btn">🗑 Clear</button>
+            <button class="btn btn-outline btn-sm" onclick="updatePreview()" id="preview-btn">👁 Refresh
+                Preview</button>
+            <button class="btn btn-primary btn-sm" onclick="downloadArticle()" id="download-btn">⬇ Download
+                HTML</button>
+        </div>
+    </header>
+
+    <div class="workspace">
+
+        <!-- ════════════════════════════════════════════════
+         LEFT — BUILDER PANEL
+    ═════════════════════════════════════════════════ -->
+        <aside class="builder-panel" id="builder-panel">
+
+            <!-- ── 1. Article Metadata ──────────────────── -->
+            <div class="builder-section">
+                <div class="builder-section-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    Article Metadata
+                </div>
+
+                <div class="form-group">
+                    <label for="f-category">Category</label>
+                    <select id="f-category" oninput="updatePreview()">
+                        <option value="research">Research News</option>
+                        <option value="funding">Funding</option>
+                        <option value="media">Media</option>
+                        <option value="update">Update</option>
+                        <option value="events">Event Report</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="f-headline">Headline</label>
+                    <textarea id="f-headline" rows="2" placeholder="Enter the article headline…"
+                        oninput="updatePreview()"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-author">Author Name</label>
+                        <input type="text" id="f-author" placeholder="Dr Jane Smith" oninput="updatePreview()" />
+                    </div>
+                    <div class="form-group">
+                        <label for="f-institution">Institution</label>
+                        <input type="text" id="f-institution" placeholder="UCL BCI Lab" oninput="updatePreview()" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-date">Publication Date</label>
+                        <input type="date" id="f-date" oninput="updatePreview()" />
+                    </div>
+                    <div class="form-group">
+                        <label for="f-readtime">Reading Time</label>
+                        <input type="text" id="f-readtime" placeholder="5 min read" oninput="updatePreview()" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── 2. Top Media ─────────────────────────── -->
+            <div class="builder-section">
+                <div class="builder-section-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    Top Media Block
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Image / GIF</label>
+                    <div class="upload-zone" id="top-media-zone">
+                        <input type="file" id="top-media-file" accept="image/*" onchange="handleTopMediaUpload(this)" />
+                        <div class="upload-zone-icon">🖼</div>
+                        <div class="upload-zone-label">Click to browse or drag an image / GIF here</div>
+                    </div>
+                    <div class="upload-preview" id="top-media-preview">
+                        <img id="top-media-preview-img" src="" alt="Top media preview" />
+                    </div>
+                </div>
+
+                <div class="or-divider">or enter a path / URL</div>
+
+                <div class="form-group">
+                    <label for="f-media-url">Image / Video / GIF path or URL</label>
+                    <input type="text" id="f-media-url" placeholder="assets/my-image.png" oninput="updatePreview()" />
+                    <p style="font-size:.72rem;color:var(--clr-muted);margin-top:.3rem;">For video files use the full
+                        path/URL; they will use a &lt;video&gt; tag.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="f-media-caption">Caption</label>
+                    <input type="text" id="f-media-caption" placeholder="Image credit or description…"
+                        oninput="updatePreview()" />
+                </div>
+            </div>
+
+            <!-- ── 3. Article Body ──────────────────────── -->
+            <div class="blocks-area">
+                <div class="blocks-header">
+                    <span class="blocks-title">
+                        <svg width="13" height="13" style="display:inline;vertical-align:middle;margin-right:.3rem;"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="8" y1="6" x2="21" y2="6" />
+                            <line x1="8" y1="12" x2="21" y2="12" />
+                            <line x1="8" y1="18" x2="21" y2="18" />
+                            <line x1="3" y1="6" x2="3.01" y2="6" />
+                            <line x1="3" y1="12" x2="3.01" y2="12" />
+                            <line x1="3" y1="18" x2="3.01" y2="18" />
+                        </svg>
+                        Article Body
+                    </span>
+                </div>
+
+                <!-- Add-block buttons -->
+                <div class="add-block-bar">
+                    <button class="add-block-btn" onclick="addBlock('paragraph')">¶ Paragraph</button>
+                    <button class="add-block-btn" onclick="addBlock('h2')">H2 Heading</button>
+                    <button class="add-block-btn" onclick="addBlock('h3')">H3 Sub-heading</button>
+                    <button class="add-block-btn" onclick="addBlock('image')">🖼 Image</button>
+                    <button class="add-block-btn" onclick="addBlock('blockquote')">" Blockquote</button>
+                    <button class="add-block-btn" onclick="addBlock('callout')">💡 Callout</button>
+                </div>
+
+                <!-- Block list -->
+                <div id="blocks-list"></div>
+            </div>
+
+        </aside>
+
+        <!-- ════════════════════════════════════════════════
+         RIGHT — LIVE PREVIEW
+    ═════════════════════════════════════════════════ -->
+        <section class="preview-panel">
+            <div class="preview-header">
+                <span class="preview-label">Live Preview</span>
+                <div style="display:flex;gap:.5rem;align-items:center;">
+                    <span style="font-size:.75rem;color:var(--clr-muted);">Updates automatically as you type</span>
+                </div>
+            </div>
+            <div class="preview-frame-wrap">
+                <div class="preview-frame pv" id="preview-frame">
+                    <div class="pv-placeholder">
+                        <div class="pv-placeholder-icon">✍️</div>
+                        <p>Start filling in the form on the left<br>and your article preview will appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ═══════════════════════════════════════════════════
+        //  STATE
+        // ═══════════════════════════════════════════════════
+        let blocks = [];
+        let blockIdCounter = 0;
+        let topMediaBase64 = null;  // stores uploaded image as base64
+        let debounceTimer = null;
+
+        // category → CSS classes for the tag pill
+        const catMap = {
+            research: { label: 'Research News', cls: 'tag-news' },
+            funding: { label: 'Funding', cls: 'tag-update' },
+            media: { label: 'Media', cls: 'tag-research' },
+            update: { label: 'Update', cls: 'tag-update' },
+            events: { label: 'Event Report', cls: 'tag-events' },
+        };
+
+        // ═══════════════════════════════════════════════════
+        //  BLOCK MANAGEMENT
+        // ═══════════════════════════════════════════════════
+        function addBlock(type, afterId = null) {
+            const id = ++blockIdCounter;
+            const block = { id, type, ...defaultData(type) };
+            if (afterId !== null) {
+                const idx = blocks.findIndex(b => b.id === afterId);
+                blocks.splice(idx + 1, 0, block);
+            } else {
+                blocks.push(block);
+            }
+            renderBlocks();
+            schedulePreview();
+            // Scroll new block into view
+            setTimeout(() => {
+                const el = document.getElementById('block-' + id);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 50);
+        }
+
+        function defaultData(type) {
+            switch (type) {
+                case 'paragraph': return { content: '' };
+                case 'h2': return { content: '' };
+                case 'h3': return { content: '' };
+                case 'image': return { src: '', base64: null, caption: '', alt: '' };
+                case 'blockquote': return { text: '', cite: '' };
+                case 'callout': return { label: 'Key Finding', text: '' };
+                default: return {};
+            }
+        }
+
+        function removeBlock(id) {
+            blocks = blocks.filter(b => b.id !== id);
+            renderBlocks();
+            schedulePreview();
+        }
+
+        function moveBlock(id, dir) {
+            const idx = blocks.findIndex(b => b.id === id);
+            const to = idx + dir;
+            if (to < 0 || to >= blocks.length) return;
+            [blocks[idx], blocks[to]] = [blocks[to], blocks[idx]];
+            renderBlocks();
+            schedulePreview();
+        }
+
+        function updateBlockField(id, field, value) {
+            const b = blocks.find(b => b.id === id);
+            if (b) b[field] = value;
+            schedulePreview();
+        }
+
+        // ═══════════════════════════════════════════════════
+        //  RENDER BLOCK EDITOR UI
+        // ═══════════════════════════════════════════════════
+        const typeBadges = {
+            paragraph: ['badge-paragraph', '¶ Paragraph'],
+            h2: ['badge-h2', 'H2 Heading'],
+            h3: ['badge-h3', 'H3 Sub-heading'],
+            image: ['badge-image', '🖼 Image'],
+            blockquote: ['badge-blockquote', '" Blockquote'],
+            callout: ['badge-callout', '💡 Callout'],
+        };
+
+        function renderBlocks() {
+            const list = document.getElementById('blocks-list');
+            if (!blocks.length) {
+                list.innerHTML = `<div class="blocks-empty">
+        <div class="blocks-empty-icon">📝</div>
+        <p>No content blocks yet.<br>Use the buttons above to add paragraphs, headings, images and more.</p>
+      </div>`;
+                return;
+            }
+            list.innerHTML = blocks.map((b, i) => renderBlockEditor(b, i)).join('');
+
+            // re-attach file upload listeners
+            blocks.forEach(b => {
+                if (b.type === 'image') {
+                    const inp = document.getElementById('block-img-file-' + b.id);
+                    if (inp) inp.addEventListener('change', function () { handleBlockImageUpload(b.id, this); });
+                }
+            });
+        }
+
+        function renderBlockEditor(b, i) {
+            const [badgeCls, badgeLabel] = typeBadges[b.type] || ['', b.type];
+            const isFirst = i === 0, isLast = i === blocks.length - 1;
+
+            let bodyHtml = '';
+            switch (b.type) {
+                case 'paragraph':
+                    bodyHtml = `<div class="form-group">
+          <label>Paragraph Text</label>
+          <textarea rows="4" placeholder="Write your paragraph here…"
+            oninput="updateBlockField(${b.id},'content',this.value)">${esc(b.content)}</textarea>
+        </div>`;
+                    break;
+                case 'h2':
+                    bodyHtml = `<div class="form-group">
+          <label>Section Heading (H2)</label>
+          <input type="text" placeholder="Section heading…" value="${esc(b.content)}"
+            oninput="updateBlockField(${b.id},'content',this.value)" />
+        </div>`;
+                    break;
+                case 'h3':
+                    bodyHtml = `<div class="form-group">
+          <label>Sub-heading (H3)</label>
+          <input type="text" placeholder="Sub-heading…" value="${esc(b.content)}"
+            oninput="updateBlockField(${b.id},'content',this.value)" />
+        </div>`;
+                    break;
+                case 'image':
+                    bodyHtml = `
+        <div class="form-group">
+          <label>Upload Image / GIF</label>
+          <div class="upload-zone">
+            <input type="file" id="block-img-file-${b.id}" accept="image/*" />
+            <div class="upload-zone-icon">🖼</div>
+            <div class="upload-zone-label">Click to browse</div>
+          </div>
+          ${b.base64 ? `<div class="upload-preview" style="display:block;margin-top:.6rem"><img src="${b.base64}" /></div>` : ''}
+        </div>
+        <div class="or-divider">or enter a path / URL</div>
+        <div class="form-group">
+          <label>Image path or URL</label>
+          <input type="text" placeholder="assets/figure1.png" value="${esc(b.src)}"
+            oninput="updateBlockField(${b.id},'src',this.value)" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Alt text</label>
+            <input type="text" placeholder="Describe the image…" value="${esc(b.alt)}"
+              oninput="updateBlockField(${b.id},'alt',this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Caption</label>
+            <input type="text" placeholder="Figure 1 — …" value="${esc(b.caption)}"
+              oninput="updateBlockField(${b.id},'caption',this.value)" />
+          </div>
+        </div>`;
+                    break;
+                case 'blockquote':
+                    bodyHtml = `
+        <div class="form-group">
+          <label>Quote Text</label>
+          <textarea rows="3" placeholder="The quoted text…"
+            oninput="updateBlockField(${b.id},'text',this.value)">${esc(b.text)}</textarea>
+        </div>
+        <div class="form-group">
+          <label>Attribution (cite)</label>
+          <input type="text" placeholder="— Dr Jane Smith, UCL" value="${esc(b.cite)}"
+            oninput="updateBlockField(${b.id},'cite',this.value)" />
+        </div>`;
+                    break;
+                case 'callout':
+                    bodyHtml = `
+        <div class="form-group">
+          <label>Callout Label</label>
+          <input type="text" placeholder="Key Finding" value="${esc(b.label)}"
+            oninput="updateBlockField(${b.id},'label',this.value)" />
+        </div>
+        <div class="form-group">
+          <label>Callout Text</label>
+          <textarea rows="3" placeholder="Highlight a key point or statistic…"
+            oninput="updateBlockField(${b.id},'text',this.value)">${esc(b.text)}</textarea>
+        </div>`;
+                    break;
+            }
+
+            return `<div class="block-item" id="block-${b.id}">
+      <div class="block-header">
+        <span class="drag-handle" title="Drag to reorder">⠿</span>
+        <span class="block-type-badge ${badgeCls}">${badgeLabel}</span>
+        <div class="block-controls">
+          <button class="btn btn-muted btn-icon btn-sm" onclick="moveBlock(${b.id},-1)" ${isFirst ? 'disabled' : ''} title="Move up">↑</button>
+          <button class="btn btn-muted btn-icon btn-sm" onclick="moveBlock(${b.id},1)"  ${isLast ? 'disabled' : ''} title="Move down">↓</button>
+          <button class="btn btn-muted btn-icon btn-sm" onclick="addBlock('paragraph',${b.id})" title="Add paragraph below">+¶</button>
+          <button class="btn btn-danger btn-icon btn-sm" onclick="removeBlock(${b.id})" title="Remove block">✕</button>
+        </div>
+      </div>
+      <div class="block-body">${bodyHtml}</div>
+    </div>`;
+        }
+
+        // ═══════════════════════════════════════════════════
+        //  IMAGE UPLOADS
+        // ═══════════════════════════════════════════════════
+        function handleTopMediaUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                topMediaBase64 = e.target.result;
+                const prev = document.getElementById('top-media-preview');
+                const img = document.getElementById('top-media-preview-img');
+                img.src = topMediaBase64;
+                prev.style.display = 'block';
+                document.getElementById('f-media-url').value = '';
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleBlockImageUpload(blockId, input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const b = blocks.find(b => b.id === blockId);
+                if (b) { b.base64 = e.target.result; b.src = ''; }
+                renderBlocks();
+                schedulePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ═══════════════════════════════════════════════════
+        //  LIVE PREVIEW
+        // ═══════════════════════════════════════════════════
+        function schedulePreview() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(updatePreview, 300);
+        }
+
+        function updatePreview() {
+            const frame = document.getElementById('preview-frame');
+            frame.innerHTML = buildPreviewHTML();
+        }
+
+        function buildPreviewHTML() {
+            const headline = val('f-headline');
+            const author = val('f-author') || 'Author Name';
+            const institution = val('f-institution') || 'Institution';
+            const date = formatDate(val('f-date'));
+            const readtime = val('f-readtime') || '';
+            const caption = val('f-media-caption');
+            const mediaSrc = topMediaBase64 || val('f-media-url');
+            const cat = document.getElementById('f-category').value;
+            const { label: catLabel, cls: catCls } = catMap[cat] || catMap.research;
+
+            if (!headline && !blocks.length && !mediaSrc) {
+                return `<div class="pv-placeholder"><div class="pv-placeholder-icon">✍️</div><p>Start filling in the form on the left<br>and your article preview will appear here.</p></div>`;
+            }
+
+            const initials = (author.match(/\b\w/g) || ['?']).slice(0, 2).join('').toUpperCase();
+            const mediaTag = buildMediaTag(mediaSrc, 'pv-hero-media');
+
+            let bodyHtml = blocks.map(b => buildBlockPreviewHTML(b)).join('');
+
+            return `<div class="pv">
+      ${mediaSrc ? `<div class="pv-hero-media">${mediaTag}</div>${caption ? `<div class="pv-hero-caption">${esc(caption)}</div>` : ''}` : ''}
+      <div class="pv-layout">
+        <div class="pv-back">← Back to News</div>
+        <span class="pv-tag ${catCls}">${catLabel}</span>
+        <h1 class="pv-headline">${esc(headline) || '<em style="opacity:.4">Article headline will appear here…</em>'}</h1>
+        <div class="pv-author-bar">
+          <div class="pv-avatar">${initials}</div>
+          <div>
+            <div class="pv-author-name">${esc(author)}</div>
+            <div class="pv-author-meta">
+              <span>${esc(institution)}</span>
+              ${date ? `<span>${date}</span>` : ''}
+              ${readtime ? `<span>${esc(readtime)}</span>` : ''}
+            </div>
+          </div>
+        </div>
+        <div class="pv-body">${bodyHtml || '<p style="color:#B0B8E0;font-style:italic;">Add content blocks on the left to build the article body.</p>'}</div>
+      </div>
+    </div>`;
+        }
+
+        function buildBlockPreviewHTML(b) {
+            switch (b.type) {
+                case 'paragraph':
+                    return b.content ? `<p>${esc(b.content)}</p>` : '';
+                case 'h2':
+                    return b.content ? `<h2>${esc(b.content)}</h2>` : '';
+                case 'h3':
+                    return b.content ? `<h3>${esc(b.content)}</h3>` : '';
+                case 'image': {
+                    const src = b.base64 || b.src;
+                    if (!src) return '';
+                    return `<img class="pv-img" src="${src}" alt="${esc(b.alt)}" />${b.caption ? `<p class="pv-img-caption">${esc(b.caption)}</p>` : ''}`;
+                }
+                case 'blockquote':
+                    return b.text ? `<blockquote><p>${esc(b.text)}</p>${b.cite ? `<cite>${esc(b.cite)}</cite>` : ''}</blockquote>` : '';
+                case 'callout':
+                    return b.text ? `<div class="pv-callout"><div class="pv-callout-label">${esc(b.label)}</div><p>${esc(b.text)}</p></div>` : '';
+                default: return '';
+            }
+        }
+
+        // ═══════════════════════════════════════════════════
+        //  HTML EXPORT
+        // ═══════════════════════════════════════════════════
+        function downloadArticle() {
+            const headline = val('f-headline');
+            if (!headline.trim()) { showToast('Please enter a headline before downloading.', 'error'); return; }
+
+            const author = val('f-author') || 'Author Name';
+            const institution = val('f-institution') || 'Institution';
+            const date = formatDate(val('f-date'));
+            const readtime = val('f-readtime') || '';
+            const caption = val('f-media-caption');
+            const mediaSrc = topMediaBase64 || val('f-media-url');
+            const cat = document.getElementById('f-category').value;
+            const { label: catLabel, cls: catCls } = catMap[cat] || catMap.research;
+            const initials = (author.match(/\b\w/g) || ['?']).slice(0, 2).join('').toUpperCase();
+
+            const isVideo = mediaSrc && !mediaSrc.startsWith('data:') &&
+                /\.(mp4|webm|ogg|mov)$/i.test(mediaSrc);
+
+            let mediaBlock = '';
+            if (mediaSrc) {
+                if (isVideo) {
+                    mediaBlock = `    <div class="article-hero-media-container">
+      <video class="article-hero-media" autoplay muted loop playsinline>
+        <source src="${mediaSrc}" />
+      </video>
+      ${caption ? `<div class="article-hero-caption">${esc(caption)}</div>` : ''}
+    </div>`;
+                } else {
+                    mediaBlock = `    <div class="article-hero-media-container">
+      <img
+        class="article-hero-media"
+        src="${mediaSrc}"
+        alt="${esc(headline)}"
+      />
+      ${caption ? `<div class="article-hero-caption">${esc(caption)}</div>` : ''}
+    </div>`;
+                }
+            }
+
+            const bodyHtml = blocks.map(b => buildBlockExportHTML(b)).filter(Boolean).join('\n\n        ');
+
+            const slug = headline.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 60);
+            const filename = `${slug || 'article'}.html`;
+
+            const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${esc(headline)} — UK BCI Consortium</title>
+  <meta name="description" content="${esc(headline)}" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="navbar-logo">
+      <img src="../assets/logo.png" alt="UK BCI Consortium logo" />
+      <span>UK BCI Consortium</span>
+    </a>
+    <ul class="navbar-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../news.html">News</a></li>
+      <li><a href="../events.html">Events</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../map.html">Institution Map</a></li>
+    </ul>
+    <button class="navbar-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="navbar-mobile">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../news.html">News</a></li>
+      <li><a href="../events.html">Events</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../map.html">Institution Map</a></li>
+    </ul>
+  </div>
+
+  <main class="page-content">
+
+${mediaBlock}
+
+    <div class="article-layout">
+
+      <a href="../news.html" class="article-back">&#8592; Back to News</a>
+
+      <span class="article-category-tag ${catCls}">${catLabel}</span>
+
+      <h1 class="article-headline">
+        ${esc(headline)}
+      </h1>
+
+      <div class="article-author-bar">
+        <div class="author-avatar">${initials}</div>
+        <div>
+          <div class="author-info-name">${esc(author)}</div>
+          <div class="author-info-meta">
+            <span>${esc(institution)}</span>
+            ${date ? `<span>${date}</span>` : ''}
+            ${readtime ? `<span>${esc(readtime)}</span>` : ''}
+          </div>
+        </div>
+        <div class="article-share" aria-label="Share this article">
+          <button class="share-btn" title="Share on Twitter/X" aria-label="Share on Twitter">𝕏</button>
+          <button class="share-btn" title="Share on LinkedIn" aria-label="Share on LinkedIn">in</button>
+          <button class="share-btn" title="Copy link" aria-label="Copy link">🔗</button>
+        </div>
+      </div>
+
+      <article class="article-body">
+
+        ${bodyHtml || '<!-- Article body is empty -->'}
+
+      </article>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../assets/logo.png" alt="UK BCI Consortium" />
+          <p>Uniting UK researchers, clinicians and engineers to translate brain-computer interface science
+            into clinical reality.</p>
+        </div>
+        <div>
+          <p class="footer-col-title">Navigate</p>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../news.html">News</a></li>
+            <li><a href="../events.html">Events</a></li>
+            <li><a href="../contact.html">Contact</a></li>
+            <li><a href="../map.html">Institution Map</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Connect</p>
+          <ul class="footer-links">
+            <li><a href="../contact.html">Contact Us</a></li>
+            <li><a href="https://www.linkedin.com/company/uk-bci-consortium" target="_blank" rel="noopener">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; ${new Date().getFullYear()} UK BCI Consortium. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"><\/script>
+</body>
+</html>`;
+
+            triggerDownload(html, filename);
+            showToast(`✓ Downloaded as ${filename}`, 'success');
+        }
+
+        function buildBlockExportHTML(b) {
+            switch (b.type) {
+                case 'paragraph':
+                    return b.content.trim() ? `        <p>\n          ${esc(b.content)}\n        </p>` : '';
+                case 'h2':
+                    return b.content.trim() ? `        <h2>${esc(b.content)}</h2>` : '';
+                case 'h3':
+                    return b.content.trim() ? `        <h3>${esc(b.content)}</h3>` : '';
+                case 'image': {
+                    const src = b.base64 || b.src;
+                    if (!src) return '';
+                    return `        <img\n          class="article-inline-img"\n          src="${src}"\n          alt="${esc(b.alt)}"\n        />${b.caption ? `\n        <p class="article-img-caption">${esc(b.caption)}</p>` : ''}`;
+                }
+                case 'blockquote':
+                    if (!b.text.trim()) return '';
+                    return `        <blockquote>\n          <p>${esc(b.text)}</p>${b.cite ? `\n          <cite>${esc(b.cite)}</cite>` : ''}\n        </blockquote>`;
+                case 'callout':
+                    if (!b.text.trim()) return '';
+                    return `        <div class="article-callout">\n          <div class="article-callout-label">${esc(b.label)}</div>\n          <p>${esc(b.text)}</p>\n        </div>`;
+                default: return '';
+            }
+        }
+
+        // ═══════════════════════════════════════════════════
+        //  UTILITIES
+        // ═══════════════════════════════════════════════════
+        function val(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+        function esc(str) {
+            return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function formatDate(iso) {
+            if (!iso) return '';
+            try {
+                return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            } catch { return iso; }
+        }
+
+        function buildMediaTag(src, cls) {
+            if (!src) return '';
+            const isVideo = !src.startsWith('data:') && /\.(mp4|webm|ogg|mov)$/i.test(src);
+            if (isVideo) return `<video class="${cls}" autoplay muted loop playsinline><source src="${src}" /></video>`;
+            return `<img class="${cls}" src="${src}" alt="Article media" />`;
+        }
+
+        function triggerDownload(content, filename) {
+            const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        function showToast(message, type = '') {
+            const t = document.getElementById('toast');
+            t.textContent = message;
+            t.className = 'toast show' + (type ? ' ' + type : '');
+            setTimeout(() => { t.className = 'toast'; }, 3500);
+        }
+
+        function clearAll() {
+            if (!confirm('Clear all fields and blocks? This cannot be undone.')) return;
+            blocks = []; blockIdCounter = 0; topMediaBase64 = null;
+            ['f-category', 'f-headline', 'f-author', 'f-institution', 'f-date', 'f-readtime', 'f-media-url', 'f-media-caption'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = el.tagName === 'SELECT' ? el.options[0]?.value : '';
+            });
+            document.getElementById('top-media-preview').style.display = 'none';
+            document.getElementById('top-media-file').value = '';
+            renderBlocks();
+            updatePreview();
+            showToast('Cleared.');
+        }
+
+        // ════════════════════════════════════
+        //  LOAD ARTICLE
+        // ════════════════════════════════════
+        function loadArticle(file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(e.target.result, 'text/html');
+
+                // --- Metadata ---
+                const tagEl = doc.querySelector('.article-category-tag');
+                if (tagEl) {
+                    const tagText = tagEl.textContent.trim();
+                    const catEntry = Object.entries(catMap).find(([, v]) => v.label === tagText);
+                    if (catEntry) document.getElementById('f-category').value = catEntry[0];
+                }
+
+                const headlineEl = doc.querySelector('.article-headline');
+                if (headlineEl) document.getElementById('f-headline').value = headlineEl.textContent.trim();
+
+                const authorEl = doc.querySelector('.author-info-name');
+                if (authorEl) document.getElementById('f-author').value = authorEl.textContent.trim();
+
+                const metaSpans = doc.querySelectorAll('.author-info-meta span');
+                if (metaSpans[0]) document.getElementById('f-institution').value = metaSpans[0].textContent.trim();
+                if (metaSpans[1]) {
+                    const iso = parseDisplayDate(metaSpans[1].textContent.trim());
+                    if (iso) document.getElementById('f-date').value = iso;
+                }
+                if (metaSpans[2]) document.getElementById('f-readtime').value = metaSpans[2].textContent.trim();
+
+                // --- Top Media ---
+                const heroImg = doc.querySelector('.article-hero-media-container img');
+                const heroVideoSrc = doc.querySelector('.article-hero-media-container video source');
+                const heroCaptionEl = doc.querySelector('.article-hero-caption');
+
+                topMediaBase64 = null;
+                document.getElementById('top-media-preview').style.display = 'none';
+                document.getElementById('f-media-url').value = '';
+
+                if (heroImg) {
+                    const src = heroImg.getAttribute('src') || '';
+                    if (src.startsWith('data:')) {
+                        topMediaBase64 = src;
+                        document.getElementById('top-media-preview-img').src = src;
+                        document.getElementById('top-media-preview').style.display = 'block';
+                    } else {
+                        document.getElementById('f-media-url').value = src;
+                    }
+                } else if (heroVideoSrc) {
+                    document.getElementById('f-media-url').value = heroVideoSrc.getAttribute('src') || '';
+                }
+                if (heroCaptionEl) document.getElementById('f-media-caption').value = heroCaptionEl.textContent.trim();
+
+                // --- Article Body Blocks ---
+                blocks = [];
+                blockIdCounter = 0;
+
+                const articleBody = doc.querySelector('.article-body');
+                if (articleBody) {
+                    const children = Array.from(articleBody.childNodes).filter(n => n.nodeType === 1);
+                    let i = 0;
+                    while (i < children.length) {
+                        const el = children[i];
+                        const tag = el.tagName.toLowerCase();
+                        const id = ++blockIdCounter;
+
+                        if (tag === 'p' && !el.classList.contains('article-img-caption')) {
+                            blocks.push({ id, type: 'paragraph', content: el.textContent.trim() });
+                        } else if (tag === 'h2') {
+                            blocks.push({ id, type: 'h2', content: el.textContent.trim() });
+                        } else if (tag === 'h3') {
+                            blocks.push({ id, type: 'h3', content: el.textContent.trim() });
+                        } else if (tag === 'img' && el.classList.contains('article-inline-img')) {
+                            const src = el.getAttribute('src') || '';
+                            const alt = el.getAttribute('alt') || '';
+                            let caption = '';
+                            const next = children[i + 1];
+                            if (next && next.tagName.toLowerCase() === 'p' && next.classList.contains('article-img-caption')) {
+                                caption = next.textContent.trim();
+                                i++;
+                            }
+                            const base64 = src.startsWith('data:') ? src : null;
+                            blocks.push({ id, type: 'image', src: base64 ? '' : src, base64, caption, alt });
+                        } else if (tag === 'blockquote') {
+                            const pEl = el.querySelector('p');
+                            const citeEl = el.querySelector('cite');
+                            blocks.push({ id, type: 'blockquote', text: pEl ? pEl.textContent.trim() : '', cite: citeEl ? citeEl.textContent.trim() : '' });
+                        } else if (tag === 'div' && el.classList.contains('article-callout')) {
+                            const labelEl = el.querySelector('.article-callout-label');
+                            const pEl = el.querySelector('p');
+                            blocks.push({ id, type: 'callout', label: labelEl ? labelEl.textContent.trim() : 'Key Finding', text: pEl ? pEl.textContent.trim() : '' });
+                        }
+                        i++;
+                    }
+                }
+
+                // Reset the file input so the same file can be reloaded
+                document.getElementById('load-article-input').value = '';
+
+                renderBlocks();
+                updatePreview();
+                showToast('✓ Article loaded', 'success');
+            };
+            reader.readAsText(file);
+        }
+
+        function parseDisplayDate(str) {
+            // Parse "5 April 2026" → "2026-04-05"
+            if (!str) return '';
+            try {
+                const d = new Date(str + ' UTC');
+                if (isNaN(d.getTime())) return '';
+                return d.toISOString().split('T')[0];
+            } catch { return ''; }
+        }
+
+        // ═══════════════════════════════════════════════════
+        //  INIT
+        // ═══════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('f-date').value = today;
+
+            renderBlocks();
+            updatePreview();
+
+            // Global input listener for meta fields
+            ['f-category', 'f-headline', 'f-author', 'f-institution', 'f-date', 'f-readtime', 'f-media-url', 'f-media-caption'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', schedulePreview);
+            });
+        });
+    </script>
+</body>
+
+</html>
